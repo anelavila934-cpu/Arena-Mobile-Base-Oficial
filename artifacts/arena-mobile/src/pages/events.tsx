@@ -1,0 +1,8 @@
+import { useState } from 'react';
+import { Bell } from 'lucide-react';
+import { DemoPill, PageHeading } from '@/components/shell/page-heading';
+
+export function EventsView() {
+  const [subscribed, setSubscribed] = useState(false);
+  return <div><PageHeading kicker="Arena calendar" title="Eventos." description="The official calendar for broadcasts, competitions, and moments worth showing up for." action={<div style={{ marginTop: 14 }}><DemoPill /></div>} /><div className="home-grid"><section className="surface"><div className="surface-header"><h2>Next on the grid</h2><DemoPill /></div><div className="surface-body"><div className="timeline"><div className="timeline-item"><time>DATE TBA / 01</time><h3>Opening signal</h3><p>Official Arena events will land here first.</p></div><div className="timeline-item"><time>DATE TBA / 02</time><h3>Community window</h3><p>Verified meetups and community moments, ready to be announced.</p></div><div className="timeline-item"><time>DATE TBA / 03</time><h3>Championship desk</h3><p>Competition updates are waiting for the official calendar.</p></div></div></div></section><section className="surface signal-card"><div className="eyebrow">Calendar relay</div><h3>Never miss the call.</h3><p>Subscribe locally to be ready when official events become available.</p><button className="button-primary" onClick={() => setSubscribed((value) => !value)} data-testid="button-subscribe-events">{subscribed ? 'Subscribed locally' : 'Subscribe locally'} <Bell size={14} /></button></section></div></div>;
+}

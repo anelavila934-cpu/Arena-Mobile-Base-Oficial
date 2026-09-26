@@ -1,0 +1,14 @@
+import { useState } from 'react';
+import { ChevronRight, CircleHelp } from 'lucide-react';
+import { DemoPill, PageHeading } from '@/components/shell/page-heading';
+
+export function SettingsView() {
+  const [settings, setSettings] = useState({ motion: true, alerts: true, compact: false });
+  const [saved, setSaved] = useState(false);
+  const toggle = (key: keyof typeof settings) => setSettings((current) => ({ ...current, [key]: !current[key] }));
+  return <div><PageHeading kicker="System controls" title="Configuración." description="Tune the command center for your attention, your pace, and your screen." action={<div style={{ marginTop: 14 }}><DemoPill /></div>} /><section className="surface"><div className="surface-header"><h2>Interface preferences</h2><span className="eyebrow">LOCAL ONLY</span></div><div className="surface-body"><div className="setting-list"><SettingRow title="Cinematic motion" copy="Keep staged entrances and ambient UI movement enabled." active={settings.motion} onToggle={() => toggle('motion')} testId="motion" /><SettingRow title="Arena alerts" copy="Prepare local notification preferences for future event signals." active={settings.alerts} onToggle={() => toggle('alerts')} testId="alerts" /><SettingRow title="Compact command mode" copy="Reduce spacing across dense data surfaces." active={settings.compact} onToggle={() => toggle('compact')} testId="compact" /></div><div style={{ display:'flex', justifyContent:'flex-end', marginTop:18 }}><button className="button-primary" onClick={() => setSaved(true)} data-testid="button-save-settings">Save local preferences <ChevronRight size={14} /></button></div>{saved && <div className="toast-message" role="status" data-testid="status-settings-saved">Preferences saved locally.</div>}</div></section><section className="surface" style={{ marginTop:18 }}><div className="surface-body" style={{ display:'flex', gap:15, alignItems:'flex-start' }}><CircleHelp size={18} color="#c26bff" /><div><strong style={{ fontSize:12 }}>Future-proof by design.</strong><p style={{ color:'#81768f', fontSize:11, lineHeight:1.6, margin:'5px 0 0' }}>Account, privacy, connected services, and data-source controls will be added here when official systems are ready.</p></div></div></section></div>;
+}
+
+function SettingRow({ title, copy, active, onToggle, testId }: { title: string; copy: string; active: boolean; onToggle: () => void; testId: string }) {
+  return <div className="setting-row"><div className="setting-copy"><strong>{title}</strong><span>{copy}</span></div><button className={`toggle ${active ? 'on' : ''}`} onClick={onToggle} aria-label={`Toggle ${title}`} data-testid={`toggle-${testId}`}><span /></button></div>;
+}

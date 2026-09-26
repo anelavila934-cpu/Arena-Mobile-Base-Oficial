@@ -1,0 +1,28 @@
+kind = "web"
+previewPath = "/"
+title = "Arena Mobile"
+description = "Plataforma oficial de videojuegos y esports con navegación modular, identidad premium y espacios preparados para integrar rankings, streaming, torneos, noticias, eventos y perfiles reales."
+version = "1.0.0"
+id = "artifacts/arena-mobile"
+router = "path"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 23474
+
+[services.development]
+run = "pnpm --filter @workspace/arena-mobile run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/arena-mobile", "run", "build" ]
+serve = "static"
+publicDir = "artifacts/arena-mobile/dist/public"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "23474"
+BASE_PATH = "/"

@@ -1,0 +1,10 @@
+import { useState } from 'react';
+import { Compass, Trophy } from 'lucide-react';
+import { DemoPill, PageHeading } from '@/components/shell/page-heading';
+import { platformPreview } from '@/data/platform-data';
+
+export function RankingView() {
+  const [game, setGame] = useState('All games');
+  const [season, setSeason] = useState('Season 01');
+  return <div><PageHeading kicker="Competitive index" title="Ranking." description="A transparent ladder for verified competition. Nothing is fabricated here." action={<div style={{ marginTop: 14 }}><DemoPill /></div>} /><div className="filter-row"><button className={`filter-button ${game === 'All games' ? 'active' : ''}`} onClick={() => setGame('All games')} data-testid="button-filter-all-games">All games</button><button className={`filter-button ${game === 'Arena FPS' ? 'active' : ''}`} onClick={() => setGame('Arena FPS')} data-testid="button-filter-arena-fps">Arena FPS</button><button className={`filter-button ${game === 'Strategy' ? 'active' : ''}`} onClick={() => setGame('Strategy')} data-testid="button-filter-strategy">Strategy</button><select className="select-control" value={season} onChange={(event) => setSeason(event.target.value)} aria-label="Select season" data-testid="select-season"><option>Season 01</option><option>Season 02</option></select></div><section className="surface"><div className="surface-header"><h2>{game} ladder</h2><span className="eyebrow">{season} / {platformPreview.syncLabel}</span></div><div className="surface-body"><div className="empty-panel"><div className="empty-orbit"><Trophy size={20} /></div><h3>Ladder offline</h3><p>There are no official ranking entries to display yet. Verified competitors and ratings will populate this table when the ranking service is connected.</p><button className="button-ghost" onClick={() => setSeason('Season 01')} data-testid="button-refresh-ranking">Refresh preview <Compass size={14} /></button></div></div></section></div>;
+}
